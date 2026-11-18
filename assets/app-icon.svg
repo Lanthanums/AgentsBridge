@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="surface" x1="28" y1="20" x2="226" y2="238" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6677EE"/>
+      <stop offset="0.52" stop-color="#5B5FD8"/>
+      <stop offset="1" stop-color="#7547B8"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(62 38) rotate(52) scale(224)">
+      <stop stop-color="#FFFFFF" stop-opacity="0.24"/>
+      <stop offset="0.62" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="nodes" x1="72" y1="62" x2="184" y2="194" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6879ED"/>
+      <stop offset="1" stop-color="#704BBD"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#281957" flood-opacity="0.24"/>
+    </filter>
+  </defs>
+  <rect x="6" y="6" width="244" height="244" rx="58" fill="url(#surface)"/>
+  <rect x="6" y="6" width="244" height="244" rx="58" fill="url(#glow)"/>
+  <rect x="7" y="7" width="242" height="242" rx="57" fill="none" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="2"/>
+  <path d="M68 68L188 188M188 68L68 188" fill="none" stroke="#FFFFFF" stroke-opacity="0.88" stroke-width="15" stroke-linecap="round"/>
+  <g filter="url(#shadow)">
+    <circle cx="68" cy="68" r="23" fill="#FFFFFF"/>
+    <circle cx="188" cy="68" r="23" fill="#FFFFFF"/>
+    <circle cx="68" cy="188" r="23" fill="#FFFFFF"/>
+    <circle cx="188" cy="188" r="23" fill="#FFFFFF"/>
+  </g>
+  <circle cx="68" cy="68" r="9" fill="url(#nodes)"/>
+  <circle cx="188" cy="68" r="9" fill="url(#nodes)"/>
+  <circle cx="68" cy="188" r="9" fill="url(#nodes)"/>
+  <circle cx="188" cy="188" r="9" fill="url(#nodes)"/>
+  <circle cx="128" cy="128" r="10" fill="#FFFFFF"/>
+  <circle cx="128" cy="128" r="4" fill="#6570DF"/>
+</svg>

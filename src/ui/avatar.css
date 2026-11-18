@@ -1,0 +1,631 @@
+.agent-avatar {
+  --avatar-ink: var(--identity, var(--text-soft));
+  --avatar-period: var(--avatar-think);
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  overflow: visible;
+  width: 32px;
+  height: 32px;
+}
+.agent-avatar[data-lod="large"] {
+  width: 48px;
+  height: 48px;
+}
+.agent-avatar[data-lod="micro"] {
+  width: 24px;
+  height: 24px;
+}
+.agent-avatar > .avatar-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.agent-avatar[data-avatar-muted="true"] > .avatar-art {
+  filter: grayscale(1);
+}
+.avatar-fallback {
+  color: var(--avatar-ink);
+  font-weight: var(--weight-strong);
+}
+.avatar-badges {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.avatar-bubble {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  right: -8%;
+  top: -9%;
+  width: 43%;
+  min-width: 12px;
+  aspect-ratio: 1;
+  color: var(--avatar-ink);
+  background: var(--surface-1);
+  border: 1px solid currentColor;
+  border-radius: 50% 50% 50% 24%;
+}
+.avatar-bubble svg {
+  width: 89%;
+  height: 89%;
+}
+.agent-avatar[data-agent="dsh"] {
+  --avatar-whale-ink: #253843;
+  --avatar-hop-height: -7px;
+}
+[data-tone="warning"] {
+  color: var(--warning);
+}
+[data-tone="danger"] {
+  color: var(--danger);
+}
+[data-tone="success"] {
+  color: var(--success);
+}
+[data-avatar-muted="true"] .avatar-bubble {
+  color: var(--neutral);
+}
+.avatar-bubble[data-glyph="missing-cli"] {
+  width: max(29px, 74%);
+  right: -30%;
+  top: -18%;
+  aspect-ratio: 36 / 19;
+  border: 0;
+  background: transparent;
+}
+.avatar-bubble[data-glyph="missing-cli"] svg {
+  width: 100%;
+  height: 100%;
+}
+[data-avatar-state="offline"] .avatar-bubble {
+  border-radius: var(--radius-xs);
+}
+[data-avatar-state="stall"] .avatar-bubble {
+  border-radius: 30% 30% 30% 12%;
+}
+[data-avatar-state="paused"] .avatar-bubble,
+[data-avatar-paused="true"] .avatar-bubble,
+[data-avatar-state="stopped"] .avatar-bubble {
+  border-radius: var(--radius-xs);
+}
+[data-avatar-paused="true"] .avatar-pop {
+  visibility: hidden;
+}
+.agent-avatar:has(.avatar-bubble:not(.avatar-pop)) [data-part="brand-bubble"] {
+  opacity: 0;
+}
+.agent-avatar[data-lod="medium"] .avatar-detail,
+.agent-avatar[data-lod="micro"] .avatar-detail {
+  display: none;
+}
+.agent-avatar[data-lod="micro"]
+  :is(.avatar-prop, .avatar-wave, .avatar-secondary:not(.avatar-glint)) {
+  display: none;
+}
+.avatar-art
+  :is(
+    .avatar-gaze,
+    .avatar-eyes,
+    .avatar-prop,
+    .avatar-wave,
+    .avatar-secondary,
+    .avatar-detail,
+    .avatar-tail,
+    .avatar-petal-light
+  ),
+.avatar-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.avatar-art
+  :is(.avatar-prop, .avatar-wave, .avatar-secondary, .terminal-character) {
+  opacity: 0;
+}
+.agent-avatar[data-avatar-state="tool"] .avatar-prop,
+.agent-avatar[data-avatar-state="confirm"] .avatar-wave {
+  opacity: 1;
+}
+[data-agent="codex"][data-avatar-state="tool"] .avatar-prop {
+  color: var(--agent-codex);
+}
+[data-facing="left"] .avatar-gaze {
+  transform: translateX(-1.5px);
+}
+[data-facing="right"] .avatar-gaze {
+  transform: translateX(1.5px);
+}
+
+[data-avatar-loop] {
+  --avatar-delay: calc(var(--avatar-phase) / var(--avatar-rate, 1));
+}
+[data-avatar-loop="tool"] {
+  --avatar-period: var(--avatar-tool);
+}
+[data-avatar-loop="confirm"] {
+  --avatar-period: var(--avatar-attention);
+}
+[data-avatar-loop="quiet"] .avatar-dot {
+  animation: avatar-dot calc(var(--avatar-think) / var(--avatar-rate, 1))
+    var(--ease-standard)
+    calc(
+      var(--avatar-delay) + var(--dot) * var(--motion-base) /
+        var(--avatar-rate, 1)
+    )
+    infinite;
+}
+[data-avatar-loop="quiet"] .avatar-eyes {
+  animation: avatar-breathe calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="think"][data-agent="kimi"] .avatar-gaze,
+[data-avatar-loop="work"] .avatar-gaze {
+  animation: avatar-look calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="think"] .avatar-eyes,
+[data-avatar-loop="wait"] .avatar-eyes {
+  animation: avatar-blink calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="tool"] .avatar-prop {
+  animation: avatar-tool-tap calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="tool"] .terminal-character {
+  animation: avatar-terminal calc(var(--avatar-period) / var(--avatar-rate, 1))
+    steps(3, end) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="tool"] .terminal-cursor {
+  animation: avatar-flicker calc(var(--avatar-period) / var(--avatar-rate, 1))
+    steps(1, end) var(--avatar-delay) infinite;
+}
+[data-agent="dsh"][data-avatar-loop="think"] .avatar-gaze,
+[data-agent="dsh"][data-avatar-loop="quiet"] .avatar-water,
+[data-agent="dsh"][data-avatar-loop="think"] .avatar-water {
+  animation: avatar-water calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+[data-agent="dsh"][data-avatar-loop="tool"] .avatar-tail {
+  transform-origin: left bottom;
+  animation: avatar-tail calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="tool"] .avatar-ripple {
+  animation: avatar-ripple calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-enter) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="wait"] .avatar-ripple {
+  animation: avatar-ripple var(--avatar-event) var(--ease-enter) both;
+}
+.avatar-art
+  :is(
+    .avatar-knot-motion,
+    .avatar-knot-arc,
+    .avatar-whale-swim,
+    .avatar-agent-hop
+  ) {
+  transform-box: view-box;
+  transform-origin: center;
+}
+[data-agent="codex"][data-avatar-loop="think"] .avatar-knot-motion {
+  animation: avatar-knot-spin
+    calc(var(--avatar-accent-beat) / var(--avatar-rate, 1)) var(--ease-standard)
+    var(--avatar-delay) infinite;
+}
+[data-agent="codex"][data-avatar-loop="work"] .avatar-knot-motion {
+  animation: avatar-knot-sway calc(var(--avatar-period) / var(--avatar-rate, 1))
+    ease-in-out var(--avatar-delay) infinite;
+}
+[data-agent="codex"][data-avatar-loop="work"] .avatar-knot-arc {
+  animation: avatar-knot-rise calc(var(--avatar-period) / var(--avatar-rate, 1))
+    ease-in-out var(--avatar-delay) infinite;
+}
+[data-agent="dsh"]:is(
+    [data-avatar-loop="think"],
+    [data-avatar-loop="work"],
+    [data-avatar-loop="tool"]
+  )
+  .avatar-whale-swim {
+  animation: avatar-whale-swim calc(var(--avatar-think) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+:is([data-agent="codex"], [data-agent="dsh"])[data-avatar-effect="wake"]
+  .avatar-agent-hop,
+[data-agent="dsh"][data-avatar-effect="delivery"] .avatar-agent-hop {
+  animation: avatar-agent-hop calc(var(--avatar-event) / var(--avatar-rate, 1))
+    var(--ease-enter) calc(var(--avatar-age) / var(--avatar-rate, 1)) both;
+}
+.avatar-crystal-facet {
+  opacity: 0;
+}
+[data-agent="cursor"]:is(
+    [data-avatar-loop="think"],
+    [data-avatar-loop="tool"],
+    [data-avatar-loop="quiet"],
+    [data-avatar-loop="work"]
+  )
+  .avatar-crystal-facet {
+  animation: avatar-crystal-reflection
+    calc(var(--avatar-accent-beat) / var(--avatar-rate, 1)) var(--ease-standard)
+    calc(
+      var(--avatar-delay) + var(--facet) * var(--motion-fast) / 3 /
+        var(--avatar-rate, 1)
+    )
+    infinite;
+}
+[data-agent="cursor"][data-avatar-loop="think"] .avatar-shadow {
+  animation: avatar-cube-light
+    calc(var(--avatar-period) / var(--avatar-rate, 1)) var(--ease-standard)
+    var(--avatar-delay) infinite;
+}
+[data-agent="cursor"][data-avatar-state="stall"] .avatar-shadow {
+  opacity: 0.35;
+}
+[data-agent="cursor"][data-avatar-loop="quiet"] .avatar-lid {
+  transform-origin: center bottom;
+  animation: avatar-lid calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="tool"][data-lod="micro"] .avatar-eyes {
+  animation: avatar-blink calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="confirm"] .avatar-wave {
+  animation: avatar-wave calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-enter) var(--avatar-delay) infinite;
+}
+[data-avatar-loop="confirm"][data-lod="micro"] .avatar-bubble {
+  animation: avatar-breathe calc(var(--avatar-period) / var(--avatar-rate, 1))
+    var(--ease-standard) var(--avatar-delay) infinite;
+}
+.avatar-pop {
+  animation: avatar-pop calc(var(--avatar-event) / var(--avatar-rate, 1))
+    var(--ease-enter) calc(var(--avatar-age) / var(--avatar-rate, 1)) both;
+}
+[data-avatar-effect="wake"] .avatar-gaze,
+[data-avatar-effect="error"] .avatar-gaze,
+[data-avatar-effect="cancelled"] .avatar-gaze {
+  animation: avatar-flinch calc(var(--avatar-event) / var(--avatar-rate, 1))
+    var(--ease-spring) calc(var(--avatar-age) / var(--avatar-rate, 1)) both;
+}
+[data-avatar-effect="error"] .avatar-pop {
+  display: none;
+}
+[data-avatar-effect="error"] .terminal-character {
+  stroke: var(--danger);
+}
+[data-avatar-effect="error"]
+  :is(.terminal-character, .avatar-glint, .avatar-ripple),
+[data-avatar-effect="wake"] .avatar-glint,
+[data-avatar-effect="done"] .avatar-celebrate,
+[data-avatar-effect="delivery"] .avatar-celebrate {
+  animation: avatar-celebrate calc(var(--avatar-event) / var(--avatar-rate, 1))
+    var(--ease-enter) calc(var(--avatar-age) / var(--avatar-rate, 1)) both;
+}
+:is([data-avatar-effect="done"], [data-avatar-effect="delivery"])
+  .avatar-petal-light {
+  animation: avatar-petal calc(var(--motion-slow) / var(--avatar-rate, 1))
+    var(--ease-enter)
+    calc(
+      (var(--avatar-age) + var(--petal) * var(--motion-fast) / 3) /
+        var(--avatar-rate, 1)
+    )
+    both;
+}
+[data-avatar-effect="cancelled"] :is(.avatar-prop, .avatar-lid) {
+  animation: avatar-set-down calc(var(--avatar-event) / var(--avatar-rate, 1))
+    var(--ease-exit) calc(var(--avatar-age) / var(--avatar-rate, 1)) both;
+}
+[data-lod="micro"][data-avatar-loop="think"] .avatar-gaze,
+[data-lod="micro"][data-avatar-loop="tool"]
+  :is(.terminal-cursor, .avatar-tail) {
+  animation: none;
+}
+[data-agent="codex"]:is(
+    [data-avatar-state="stall"],
+    [data-avatar-state="error"]
+  )
+  .avatar-art
+  * {
+  animation: none;
+}
+
+@keyframes avatar-dot {
+  0%,
+  22%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.62;
+  }
+  10% {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+}
+@keyframes avatar-breathe {
+  0%,
+  100% {
+    transform: scaleY(0.9);
+  }
+  50% {
+    transform: scaleY(1.08);
+  }
+}
+@keyframes avatar-blink {
+  0%,
+  42%,
+  50%,
+  100% {
+    transform: scaleY(1);
+  }
+  46% {
+    transform: scaleY(0.12);
+  }
+}
+@keyframes avatar-look {
+  0%,
+  100% {
+    transform: translateX(-1.6px);
+  }
+  45%,
+  70% {
+    transform: translateX(1.6px);
+  }
+}
+@keyframes avatar-tool-tap {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-6deg);
+  }
+  45% {
+    transform: translateY(-2px) rotate(8deg);
+  }
+}
+@keyframes avatar-terminal {
+  0% {
+    transform: scaleX(0.15);
+    opacity: 0.35;
+  }
+  70%,
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+@keyframes avatar-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.22;
+  }
+}
+@keyframes avatar-water {
+  0%,
+  100% {
+    transform: translateY(1px);
+    opacity: 0.28;
+  }
+  50% {
+    transform: translateY(-2px);
+    opacity: 0.85;
+  }
+}
+@keyframes avatar-tail {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+@keyframes avatar-ripple {
+  0% {
+    transform: scale(0.45);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+@keyframes avatar-knot-spin {
+  0% {
+    transform: translateY(0) rotate(0turn) scale(1);
+    animation-timing-function: var(--ease-enter);
+  }
+  48% {
+    transform: translateY(0) rotate(1turn) scale(1.05);
+  }
+  65% {
+    transform: translateY(-1.8px) rotate(1turn) scale(1.025);
+  }
+  80%,
+  100% {
+    transform: translateY(0) rotate(1turn) scale(1);
+  }
+}
+@keyframes avatar-knot-sway {
+  0%,
+  100% {
+    transform: translateX(-3.8px) rotate(-3deg);
+  }
+  50% {
+    transform: translateX(3.8px) rotate(3deg);
+  }
+}
+@keyframes avatar-knot-rise {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+  25%,
+  75% {
+    transform: translateY(-1.8px);
+  }
+}
+@keyframes avatar-whale-swim {
+  0%,
+  100% {
+    transform: translate(-1.4px, 0.7px) rotate(-2.5deg);
+  }
+  50% {
+    transform: translate(1.7px, -1.7px) rotate(3deg);
+  }
+}
+@keyframes avatar-agent-hop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(var(--avatar-hop-height, -4px)) scale(0.98, 1.035);
+  }
+  72% {
+    transform: translateY(0) scale(1.025, 0.975);
+  }
+}
+@keyframes avatar-crystal-reflection {
+  0%,
+  58%,
+  100% {
+    opacity: 0;
+  }
+  17% {
+    opacity: 0.56;
+  }
+  32% {
+    opacity: 0.24;
+  }
+}
+@keyframes avatar-cube-light {
+  0%,
+  100% {
+    opacity: 0.19;
+    transform: scaleX(0.87);
+  }
+  47% {
+    opacity: 0.84;
+    transform: scaleX(1);
+  }
+}
+@keyframes avatar-lid {
+  0%,
+  100% {
+    opacity: 0.16;
+    transform: scaleY(1);
+  }
+  48% {
+    opacity: 0.94;
+    transform: scaleY(1.16);
+  }
+}
+@keyframes avatar-celebrate {
+  0% {
+    opacity: 0;
+    transform: scale(0.65);
+  }
+  28% {
+    opacity: 0.95;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+@keyframes avatar-petal {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  32% {
+    opacity: 1;
+  }
+}
+@keyframes avatar-set-down {
+  0% {
+    opacity: 0.85;
+    transform: translateY(-2px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(4px) rotate(10deg);
+  }
+}
+@keyframes avatar-wave {
+  0%,
+  35%,
+  100% {
+    transform: rotate(0);
+  }
+  12% {
+    transform: translateY(-2px) rotate(13deg);
+  }
+  22% {
+    transform: translateY(-1px) rotate(-7deg);
+  }
+}
+@keyframes avatar-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.21);
+  }
+  63% {
+    opacity: 1;
+    transform: scale(0.94);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px) scale(1.1);
+  }
+}
+@keyframes avatar-flinch {
+  0%,
+  100% {
+    transform: translate(0);
+  }
+  23% {
+    transform: translate(-1.6px, -1px);
+  }
+  46% {
+    transform: translate(1px, 0.5px);
+  }
+}
+@keyframes avatar-pop-fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  18%,
+  63% {
+    opacity: 1;
+  }
+}
+[data-motion="still"]
+  .agent-avatar[data-avatar-loop]
+  :not(.avatar-pop, .avatar-pop *, .avatar-agent-hop),
+[data-avatar-frozen="true"] .agent-avatar *,
+[data-native-hidden] .agent-avatar * {
+  animation-play-state: paused !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .agent-avatar *,
+  .agent-avatar {
+    animation: none !important;
+  }
+  .agent-avatar .avatar-pop {
+    animation: avatar-pop-fade calc(var(--avatar-event) / var(--avatar-rate, 1))
+      linear calc(var(--avatar-age) / var(--avatar-rate, 1)) both !important;
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "goal": "审查 Parser 并发边界",
+  "completed": [
+    "12 项回归通过",
+    "交付审查说明"
+  ],
+  "decisions": [
+    "停止为终态"
+  ],
+  "unfinished": [],
+  "artifacts": [
+    {
+      "path": "fixtures/审查说明.md",
+      "sha256": "1d36843608847404e83ef5f9d6720f7fd18046c089ad0d0dd28d131cba9022d5",
+      "summary": "并发边界与取消路径的审查说明",
+      "shared": true
+    }
+  ],
+  "context_suggestions": [
+    "下一轮新开 CLI 会话"
+  ]
+}

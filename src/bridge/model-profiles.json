@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-11-18",
+  "basis": "Qualitative maintainer observations; not measured benchmarks or provider prices.",
+  "agents": {
+    "codex": "Medium relative cost; cautious and precise, strong backend and flagship overall execution. Average frontend aesthetics and limited divergent ideation.",
+    "dsh": "Low relative cost; effective for small familiar tasks with cache reuse. Moderate frontend, backend and ideation.",
+    "cursor": "Low relative cost (Grok lane); reserve for large batches of repetitive, low-requirement work.",
+    "kimi": "Higher relative cost; good at 3D modeling, with moderate frontend and backend skills. Needs precise requirements and verifiable acceptance criteria."
+  }
+}

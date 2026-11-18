@@ -1,0 +1,30 @@
+{
+  "name": "agentsbridge",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/desktop/main.mjs",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "start": "electron .",
+    "replay": "electron . --replay",
+    "verify:adapters": "node scripts/verify-adapters.mjs",
+    "verify:ui": "node scripts/verify-ui.mjs",
+    "verify:paging": "node scripts/verify-paging-ui.mjs",
+    "verify:resilience-ui": "node scripts/verify-resilience-ui.mjs",
+    "bridge": "node src/bridge/daemon.mjs",
+    "mesh": "node scripts/mesh.mjs",
+    "benchmark": "node scripts/benchmark.mjs"
+  },
+  "dependencies": {
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "electron": "42.2.0",
+    "esbuild": "0.28.1",
+    "prettier": "3.8.1",
+    "playwright": "1.58.2"
+  }
+}
